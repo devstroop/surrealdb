@@ -2,15 +2,18 @@ services:
   surrealdb:
     image: surrealdb/surrealdb:latest
     restart: unless-stopped
-    user: "13001:13001"
     ports:
       - "${PORT:-8000}:8000"
     volumes:
-      - ${DATA_PATH}:/data
+      - surreal-data:/data
     command: >
       start -A --user root --pass ${PASSWD} file:///data
     networks:
       - mydr24-network
+
+volumes:
+  surreal-data:
+    driver: local
 
 networks:
   mydr24-network:
