@@ -1,0 +1,21 @@
+services:
+  surrealdb:
+    image: surrealdb/surrealdb:latest
+    restart: unless-stopped
+    user: "13001:13001"
+    ports:
+      - "48000:8000"
+    volumes:
+      - ${DATA_PATH}:/data
+    command: >
+      start --log debug --user root --pass ${PASSWD}
+      rocksdb:///data/database.db
+    networks:
+      - mydr24-network
+
+networks:
+  mydr24-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
