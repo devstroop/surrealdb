@@ -16,7 +16,3 @@ services:
 networks:
   mydr24-network:
     external: true
-
-volumes:
-  surrealdb_data:
-    driver: local
