@@ -6,7 +6,7 @@ services:
     ports:
       - "${PORT:-8000}:8000"
     volumes:
-      - ${DATA_PATH:-surrealdb_data}:/data
+      - ${DATA_PATH}:/data
     command: >
       start --log debug --user root --pass ${PASSWD}
       rocksdb:///data/database.db
