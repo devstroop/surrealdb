@@ -4,9 +4,9 @@ services:
     restart: unless-stopped
     user: "13001:13001"
     ports:
-      - "48000:8000"
+      - "${PORT:-8000}:8000"
     volumes:
-      - ${DATA_PATH}:/data
+      - ${DATA_PATH:-surrealdb_data}:/data
     command: >
       start --log debug --user root --pass ${PASSWD}
       rocksdb:///data/database.db
@@ -15,4 +15,8 @@ services:
 
 networks:
   mydr24-network:
-    driver: bridge
+    external: true
+
+volumes:
+  surrealdb_data:
+    driver: local
