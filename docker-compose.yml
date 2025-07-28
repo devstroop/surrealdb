@@ -2,6 +2,7 @@ services:
   surrealdb:
     image: surrealdb/surrealdb:latest
     restart: unless-stopped
+    user: "13001:13001"
     ports:
       - "${PORT:-8000}:8000"
     volumes:
