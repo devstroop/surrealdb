@@ -8,8 +8,7 @@ services:
     volumes:
       - ${DATA_PATH}:/data
     command: >
-      start --log debug --user root --pass ${PASSWD}
-      rocksdb:///data/database.db
+      start -A --log debug --user root --pass ${PASSWD} file:/data
     networks:
       - mydr24-network
 
