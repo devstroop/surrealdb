@@ -6,9 +6,9 @@ services:
     ports:
       - "${DB_PORT:-4800}:8000"
     volumes:
-      - ${DATA_PATH}:/data
+      - ${DB_PATH}:/data
     command: >
-      start -A --user root --pass ${PASSWD} file:///data
+      start -A --user ${DB_USER} --pass ${DB_PASSWD} file:///data
     networks:
       - mydr24-network
 
