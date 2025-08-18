@@ -1,21 +1,26 @@
 services:
   surrealdb:
-    image: surrealdb/surrealdb:latest
+    # Build from our custom Dockerfile to ensure correct permissions
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
-    user: "1000:1000"
+    # run as root inside container to avoid /data permission issues
+    # do not set a non-root user here
     ports:
-      - "${DB_PORT:-4800}:8000"
+      - "${DB_PORT:-8800}:8000"
     volumes:
-      - ${DB_PATH}:/data
+      - ${DB_PATH:-surreal_data}:/data
     command: >
-      start -A --user ${DB_USER} --pass ${DB_PASSWD} file:///data
+      start -A --user ${DB_USER:-root} --pass ${DB_PASSWD:-root} rocksdb:///data
     networks:
-      - mydr24-network
+      - ${NETWORK_NAME:-data-network}
 
 volumes:
-  surreal-data:
+  surreal_data:
     driver: local
 
 networks:
-  mydr24-network:
-    external: true
+  ${NETWORK_NAME:-data-network}:
+    driver: bridge
+    external: ${NETWORK_EXTERNAL:-false}
