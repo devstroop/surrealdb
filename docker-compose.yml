@@ -13,14 +13,7 @@ services:
       - ${DB_PATH:-surreal_data}:/data
     command: >
       start -A --user ${DB_USER:-root} --pass ${DB_PASSWD:-root} rocksdb:///data
-    networks:
-      - ${NETWORK_NAME:-data-network}
 
 volumes:
   surreal_data:
     driver: local
-
-networks:
-  ${NETWORK_NAME:-data-network}:
-    driver: bridge
-    external: ${NETWORK_EXTERNAL:-false}
